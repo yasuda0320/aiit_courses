@@ -1,9 +1,10 @@
-<form action="/refine" method="post">
-<input type="checkbox" name="sspt[]" value="ST">ST
-<input type="checkbox" name="sspt[]" value="SA">SA
-<input type="checkbox" name="sspt[]" value="PM">PM
-<input type="checkbox" name="sspt[]" value="TS">TS
-<input type="submit"><br />
+<form class="margin" action="/refine" method="post">
+<input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
+<input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
+<input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
+<input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
+<input type="submit">
+</form>
 
 <table>
   <tr>

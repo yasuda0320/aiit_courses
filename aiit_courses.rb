@@ -13,11 +13,18 @@ end
 require_relative 'results'
 
 get '/' do
+  @checks = [false, false, false, false]
   @results = RESULTS
   erb :index
 end
 
 post '/refine' do
+  @checks = [
+    !!params[:sspt]&.include?('ST'),
+    !!params[:sspt]&.include?('SA'),
+    !!params[:sspt]&.include?('PM'),
+    !!params[:sspt]&.include?('TS')
+  ]
   @results = RESULTS.select do |result|
     show = true
     if params[:sspt] && !params[:sspt].empty?
