@@ -155,7 +155,7 @@ class Result
   # 評点4以上の割合
   # @return [void]
   ################################################################################
-  def self.set_recommended
+  def self.up4
     @results.each do |result|
       percent = ''
       unless result[PARTICIPANT].empty?
@@ -173,6 +173,7 @@ class Result
   scrape_url
   scrape_result
   set_recommended
+  up4
 end
 
 # Result.scrape_url
