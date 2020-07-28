@@ -5,11 +5,10 @@ require 'sinatra'
 if development?
   require 'sinatra/reloader'
 end
-require_relative 'result'
+require_relative 'results'
 
 get '/' do
-  Result.scrape_url
-  @results = Result.results
+  @results = RESULTS
   erb :index
 end
 
