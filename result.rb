@@ -1,0 +1,124 @@
+require 'open-uri'
+require 'pdf-reader'
+require_relative 'recommended_courses'
+require_relative 'course2020'
+
+class Result
+  DISCLOSURE = 'https://aiit.ac.jp/support/disclosure.html'
+  PDF_REGEXP = %r(href="(/documents/jp/support/disclosure/.*\.pdf)")
+  RESULT_REGEXP = /\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
+  RESULT_REGEXP2 = /\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+\S\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
+  RESULT_REGEXP3 = /\s+\S\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
+  YEAR = 0
+  ST = 2
+  SA = 3
+  PM = 4
+  TS = 5
+  COURSE = 6
+  
+  @last_modified = nil
+  @pdf_urls = []
+  @results = []
+  
+  class << self
+    attr_reader :results
+  end
+  
+  def self.scrape_url
+    OpenURI.open_uri(DISCLOSURE, 'rb') do |sio|
+      unless @last_modified == sio.last_modified
+        @last_modified = sio.last_modified
+        @pdf_urls = []
+        html = sio.read
+        while html
+          @pdf_urls << "https://aiit.ac.jp#{$1}" if PDF_REGEXP.match(html)
+          html = $' # $'はマッチ以降のテキスト
+        end
+      end
+    end
+    @pdf_urls
+  end
+  
+  def self.match_line(yq, reg_exp, line)
+    match = reg_exp.match(line)
+    if match
+      array = match[1..-1].to_a
+      # 2017年2Qの「組込みシステム特論」で科目名と指導教員が入れ替わってしまうため
+      # 全角文字＋全角スペース＋全角文字のパターンを捜して入れ替え
+      (array[0], array[1] = array[1], array[0]) if array[0] =~ /\S+　\S+/
+      @results << yq + array
+    end
+    !!match
+  end
+  
+  def self.year_quarter(url)
+    yq = File.basename(url).split('.').first.split('_')[0..1]
+    
+    if yq[0] =~ /^[hH]\d+$/
+      yq[0] = (yq[0][1..-1].to_i + 1988).to_s
+    elsif yq[0] =~ /^[rR]\d+$/
+      yq[0] = (yq[0][1..-1].to_i + 2018).to_s
+    else
+      yq[0] = '不明'
+    end
+    
+    if yq[1] =~ /^[1234][qQ]$/
+      yq[1].upcase!
+    else
+      yq[1] = '不明'
+    end
+    
+    yq + ['', '', '', '']
+  end
+  
+  def self.scrape_result
+    return @results unless @results.empty?
+    
+    @pdf_urls.each do |url|
+      yq = year_quarter(url)
+      last_line = ''
+      OpenURI.open_uri(url) do |sio|
+        reader = PDF::Reader.new(sio)
+        reader.pages.first.text.split("\n").each do |line|
+          if match_line(yq, RESULT_REGEXP, line)
+            last_line = ''
+            next
+          end
+          if last_line.empty?
+            last_line = line
+            next
+          end
+          found = false
+          [RESULT_REGEXP, RESULT_REGEXP2, RESULT_REGEXP3].each do |reg_exp|
+            if match_line(yq, reg_exp, last_line + line)
+              last_line = ''
+              found = true
+              break
+            end
+          end
+          last_line = line unless found
+        end
+      end
+    end
+    @results = COURSE2020 + @results
+  end
+  
+  def self.set_recommended
+    @results.each do |result|
+      result[ST] = '◎' if STRATEGIST[result[YEAR]].include?(result[COURSE])
+      result[SA] = '◎' if SYSTEM_ARCHITECT[result[YEAR]].include?(result[COURSE])
+      result[PM] = '◎' if PROJECT_MANAGER[result[YEAR]].include?(result[COURSE])
+      result[TS] = '◎' if TECHNICAL_SPECIALIST[result[YEAR]].include?(result[COURSE])
+    end
+  end
+  
+  scrape_url
+  scrape_result
+  set_recommended
+end
+
+# Result.scrape_url
+# require 'pp'
+# result = Result.scrape_result
+# result.each {|it| p it}
+# p Result.results.size

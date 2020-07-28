@@ -1,0 +1,38 @@
+<table>
+  <tr>
+    <th>年度</th>
+    <th>QTR</th>
+    <th>ST</th>
+    <th>SA</th>
+    <th>PM</th>
+    <th>TS</th>
+    <th>科目名</th>
+    <th>指導教員</th>
+    <th>受講者数</th>
+    <th>評点5</th>
+    <th>評点4</th>
+    <th>評点3</th>
+    <th>評点2</th>
+    <th>評点1</th>
+    <th>評点0</th>
+  </tr>
+  <% @results.each do |result| %>
+  <tr>
+    <td class="center"><%= result[0] %></td>
+    <td class="center"><%= result[1] %></td>
+    <td class="center"><%= result[2] %></td>
+    <td class="center"><%= result[3] %></td>
+    <td class="center"><%= result[4] %></td>
+    <td class="center"><%= result[5] %></td>
+    <td><%= result[6] %></td>
+    <td><%= result[7] %></td>
+    <td class="center"><%= result[8] %></td>
+    <td class="center"><%= result[9] %></td>
+    <td class="center"><%= result[10] %></td>
+    <td class="center"><%= result[11] %></td>
+    <td class="center"><%= result[12] %></td>
+    <td class="center"><%= result[13] %></td>
+    <td class="center"><%= result[14] %></td>
+  </tr>
+  <% end %>
+</table>
