@@ -6,7 +6,7 @@ require_relative 'course2020'
 ################################################################################
 # 成績スクレイピングクラス
 ################################################################################
-class Result
+class ReadResult
   ################################################################################
   # 定数
   ################################################################################
@@ -176,8 +176,5 @@ class Result
   up4
 end
 
-# Result.scrape_url
-# require 'pp'
-# result = Result.scrape_result
-# result.each {|it| p it}
-# p Result.results.size
+ReadResult.results.each {|it| p it}
+# p ReadResult.results.size
