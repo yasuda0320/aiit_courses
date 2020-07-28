@@ -18,9 +18,11 @@
     <th>4↑%</th>
   </tr>
   <% @results.each do |result| %>
+  <% year = result[0].to_i % 2 == 0 ? 'bgyreven' : 'bgyrodd' %>
+  <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
   <tr>
-    <td class="center"><%= result[0] %></td>
-    <td class="center"><%= result[1] %></td>
+    <td class="center <%= year %>"><%= result[0] %></td>
+    <td class="center <%= qtr %>"><%= result[1] %></td>
     <td class="center"><%= result[2] %></td>
     <td class="center"><%= result[3] %></td>
     <td class="center"><%= result[4] %></td>
