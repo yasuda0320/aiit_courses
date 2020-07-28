@@ -5,6 +5,7 @@
 <input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
 <input type="submit">
 </form>
+<div class="right">注）評点0は計算から除外</div>
 
 <table>
   <tr>
@@ -24,6 +25,7 @@
     <th>評点1</th>
     <th>評点0</th>
     <th>4↑%</th>
+    <th>2↑%</th>
   </tr>
   <% @results.each do |result| %>
   <% year = result[0].to_i % 2 == 0 ? 'bgyreven' : 'bgyrodd' %>
@@ -45,6 +47,7 @@
     <td class="center"><%= result[13] %></td>
     <td class="center"><%= result[14] %></td>
     <td class="center"><%= result[15] %></td>
+    <td class="center"><%= result[16] %></td>
   </tr>
   <% end %>
 </table>

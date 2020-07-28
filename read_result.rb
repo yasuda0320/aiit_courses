@@ -161,7 +161,31 @@ class ReadResult
       unless result[PARTICIPANT].empty?
         up4 = result[RESULT5].to_i + result[RESULT4].to_i
         participant = result[PARTICIPANT].to_i - result[RESULT0].to_i
-        percent = '%.01f' % (up4.to_f / participant.to_f * 100).round(1)
+        if up4 == participant
+          percent = '100'
+        else
+          percent = '%.01f' % (up4.to_f / participant.to_f * 100).round(1)
+        end
+      end
+      result << percent
+    end
+  end
+  
+  ################################################################################
+  # 評点2以上の割合
+  # @return [void]
+  ################################################################################
+  def self.up2
+    @results.each do |result|
+      percent = ''
+      unless result[PARTICIPANT].empty?
+        up2 = result[RESULT5].to_i + result[RESULT4].to_i + result[RESULT3].to_i + result[RESULT2].to_i
+        participant = result[PARTICIPANT].to_i - result[RESULT0].to_i
+        if up2 == participant
+          percent = '100'
+        else
+          percent = '%.01f' % (up2.to_f / participant.to_f * 100).round(1)
+        end
       end
       result << percent
     end
@@ -174,6 +198,7 @@ class ReadResult
   scrape_result
   set_recommended
   up4
+  up2
 end
 
 ReadResult.results.each {|it| p it}
