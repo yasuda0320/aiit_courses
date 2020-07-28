@@ -16,11 +16,21 @@ class Result
   RESULT_REGEXP2 = /\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+\S\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
   RESULT_REGEXP3 = /\s+\S\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
   YEAR = 0
+  QUARTER = 1
   ST = 2
   SA = 3
   PM = 4
   TS = 5
   COURSE = 6
+  TEACHER = 7
+  PARTICIPANT = 8
+  RESULT5 = 9
+  RESULT4 = 10
+  RESULT3 = 11
+  RESULT2 = 12
+  RESULT1 = 13
+  RESULT0 = 14
+  UP4 = 15
   
   ################################################################################
   # クラスインスタンス変数
@@ -130,7 +140,7 @@ class Result
   
   ################################################################################
   # 科目名が各年度の人材像別推奨科目に含まれているかチェック
-  # @return [Array]
+  # @return [void]
   ################################################################################
   def self.set_recommended
     @results.each do |result|
@@ -138,6 +148,22 @@ class Result
       result[SA] = '◎' if SYSTEM_ARCHITECT[result[YEAR]].include?(result[COURSE])
       result[PM] = '◎' if PROJECT_MANAGER[result[YEAR]].include?(result[COURSE])
       result[TS] = '◎' if TECHNICAL_SPECIALIST[result[YEAR]].include?(result[COURSE])
+    end
+  end
+  
+  ################################################################################
+  # 評点4以上の割合
+  # @return [void]
+  ################################################################################
+  def self.set_recommended
+    @results.each do |result|
+      percent = ''
+      unless result[PARTICIPANT].empty?
+        up4 = result[RESULT5].to_i + result[RESULT4].to_i
+        participant = result[PARTICIPANT].to_i - result[RESULT0].to_i
+        percent = '%.01f' % (up4.to_f / participant.to_f * 100).round(1)
+      end
+      result << percent
     end
   end
   
