@@ -1,5 +1,10 @@
+require 'bundler/setup'
+Bundler.require
+
 require 'sinatra'
-require 'sinatra/reloader'
+if development?
+  require 'sinatra/reloader'
+end
 require_relative 'result'
 
 get '/' do
