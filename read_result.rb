@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'pdf-reader'
+require_relative 'constants'
 require_relative 'recommended_courses'
 require_relative 'course2020'
 
@@ -15,22 +16,6 @@ class ReadResult
   RESULT_REGEXP = /\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
   RESULT_REGEXP2 = /\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+\S\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
   RESULT_REGEXP3 = /\s+\S\s+(\S{3,}|\w\S+ \S+|\w\S+ \S+ \S+|\w\S+ \S+ \S+ \S+)\s+(\S{3,}|\w+ \w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/
-  YEAR = 0
-  QUARTER = 1
-  ST = 2
-  SA = 3
-  PM = 4
-  TS = 5
-  COURSE = 6
-  TEACHER = 7
-  PARTICIPANT = 8
-  RESULT5 = 9
-  RESULT4 = 10
-  RESULT3 = 11
-  RESULT2 = 12
-  RESULT1 = 13
-  RESULT0 = 14
-  UP4 = 15
   
   ################################################################################
   # クラスインスタンス変数
