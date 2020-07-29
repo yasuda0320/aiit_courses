@@ -3,11 +3,11 @@
 <input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
 <input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
 <input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
-<input type="submit">
+<input type="submit" value="絞り込み">
 </form>
-<div class="right">注）評点0は計算から除外</div>
 
 <table>
+  <caption class="right">注）評点0は計算から除外</caption>
   <tr>
     <th>年度</th>
     <th>QTR</th>
@@ -24,8 +24,8 @@
     <th>評点2</th>
     <th>評点1</th>
     <th>評点0</th>
-    <th>4↑%</th>
-    <th>2↑%</th>
+    <th>4以上</th>
+    <th>単位取得</th>
   </tr>
   <% @results.each do |result| %>
   <% year = result[0].to_i % 2 == 0 ? 'bgyreven' : 'bgyrodd' %>
