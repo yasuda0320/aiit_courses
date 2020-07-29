@@ -34,12 +34,3 @@ post '/refine' do
   end
   erb :index
 end
-
-# get '/erb' do
-#   @message = 'コラボレイティブ開発特論'
-#   erb :erb
-# end
-# 
-# get '/haml' do
-#   haml :haml
-# end
