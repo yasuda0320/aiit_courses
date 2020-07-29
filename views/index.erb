@@ -1,9 +1,11 @@
-<form class="margin" action="/refine" method="post">
+<form class="margin" name="refine" action="/refine" method="post">
 <input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
 <input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
 <input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
 <input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
 <input type="submit" value="絞り込み">
+<input type="text" size="30" maxlength="30" name="search" value=<%= @search %>>
+<input type="button" value="×" onclick="document.refine.search.value = ''">
 </form>
 
 <table>
