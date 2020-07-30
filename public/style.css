@@ -47,11 +47,27 @@ table tr:last-child td:last-child {
 
 form.margin {margin-top: 20px; margin-left: 20px}
 /* table, td, th {border: solid 1px #000000; border-collapse: collapse} */
-caption.right {text-align: right}
-td.bgyreven {background-color: #ff9966}
-td.bgyrodd {background-color: #66ccff}
+span.caption {float: right}
+
+td.bgeven {background-color: #ff9966}
+td.bgodd {background-color: #66ccff}
 td.center {text-align: center}
 td.bg1q {background-color: white}
 td.bg2q {background-color: lightgray}
 td.bg3q {background-color: white}
 td.bg4q {background-color: lightgray}
+
+.sticky_table thead th {
+  /* 縦スクロール時に固定する */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  /* tbody内のセルより手前に表示する */
+  z-index: 1;
+}
+
+.sticky_table_wrapper {
+  overflow: scroll;
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 5rem);
+}
