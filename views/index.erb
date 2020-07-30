@@ -42,10 +42,10 @@
     <tr>
       <td class="center <%= year %>"><%= result[0] %></td>
       <td class="center <%= qtr %>"><%= result[1] %></td>
-      <td class="center"><%= result[2] %></td>
-      <td class="center"><%= result[3] %></td>
-      <td class="center"><%= result[4] %></td>
-      <td class="center"><%= result[5] %></td>
+      <td class="center <%= @checks[0] ? 'checked' : '' %>"><%= result[2] %></td>
+      <td class="center <%= @checks[1] ? 'checked' : '' %>"><%= result[3] %></td>
+      <td class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
+      <td class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
       <td><%= result[6] %></td>
       <td><%= result[7] %></td>
       <td class="center"><%= result[8] %></td>

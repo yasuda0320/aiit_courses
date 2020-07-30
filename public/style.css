@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  border-collapse:separate;
+  border-collapse: separate;
   border-spacing: 0;
 }
 
@@ -50,12 +50,13 @@ form.margin {margin-top: 20px; margin-left: 20px}
 span.caption {float: right}
 
 td.bgeven {background-color: #ff9966}
-td.bgodd {background-color: #66ccff}
+td.bgodd {background-color: #829ebc}
 td.center {text-align: center}
 td.bg1q {background-color: white}
 td.bg2q {background-color: lightgray}
 td.bg3q {background-color: white}
 td.bg4q {background-color: lightgray}
+td.checked {color: #ff9966}
 
 .sticky_table thead th {
   /* 縦スクロール時に固定する */
