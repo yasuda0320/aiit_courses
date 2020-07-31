@@ -1,66 +1,104 @@
-<form class="margin" name="refine" action="/refine" method="post">
-<input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
-<input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
-<input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
-<input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
-<input type="submit" value="絞り込み">
-<input type="text" size="30" maxlength="30" name="search" value=<%= @search %>>
-<input type="button" value="×" onclick="document.refine.search.value = ''">
-</form>
-<span class="caption">注）評点0は計算から除外　　</span>
-
-<div class="sticky_table_wrapper" height="100%">
-
-  <table class="sticky_table">
-  
-    <thead>
-    <tr>
-      <th>年度</th>
-      <th>QTR</th>
-      <th>ST</th>
-      <th>SA</th>
-      <th>PM</th>
-      <th>TS</th>
-      <th>科目名</th>
-      <th>指導教員</th>
-      <th>受講者数</th>
-      <th>評点5</th>
-      <th>評点4</th>
-      <th>評点3</th>
-      <th>評点2</th>
-      <th>評点1</th>
-      <th>評点0</th>
-      <th>4以上</th>
-      <th>単位取得</th>
-    </tr>
-    </thead>
-    
-    <tbody>
-    <% @results.each do |result| %>
-    <% year = result[0].to_i % 2 == 0 ? 'bgeven' : 'bgodd' %>
-    <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
-    <tr>
-      <td class="center <%= year %>"><%= result[0] %></td>
-      <td class="center <%= qtr %>"><%= result[1] %></td>
-      <td class="center <%= @checks[0] ? 'checked' : '' %>"><%= result[2] %></td>
-      <td class="center <%= @checks[1] ? 'checked' : '' %>"><%= result[3] %></td>
-      <td class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
-      <td class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
-      <td><%= result[6] %></td>
-      <td><%= result[7] %></td>
-      <td class="center"><%= result[8] %></td>
-      <td class="center"><%= result[9] %></td>
-      <td class="center"><%= result[10] %></td>
-      <td class="center"><%= result[11] %></td>
-      <td class="center"><%= result[12] %></td>
-      <td class="center"><%= result[13] %></td>
-      <td class="center"><%= result[14] %></td>
-      <td class="center"><%= result[15] %></td>
-      <td class="center"><%= result[16] %></td>
-    </tr>
-    <% end %>
-    </tbody>
-    
-  </table>
-
+<div style="center">
+   <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://dzpp79ucibp5a.cloudfront.net/groups_logos/2502_normal_1588037504_aiit_.jpg" alt="" width="100" height="100">
+      <h2>授業科目一覧</h2>
+      <p class="lead">AIIT 情報アーキテクチャ　授業科目一覧</p>
+   </div>
 </div>
+<div class="container-fluid">
+   <form class="margin" action="/refine" method="post">
+      <label class="checkbox-inline"><input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST</label>
+      <label class="checkbox-inline"><input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA</label>
+      <label class="checkbox-inline"><input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM</label>
+      <label class="checkbox-inline"><input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS</label>
+      <input type="submit" class="btn btn-primary btn-sm" value="絞り込み">
+      　  <input class="form-control form-control-sm" id="SearchInput" type="text" placeholder="検索...">
+   </form>
+   <div class="table-responsive">
+      <!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">  -->
+      <nav id="navbar-example2" class="nav-pills navbar navbar-expand-sm bg-light">
+         <ul class="navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" href="#bg1q">2020-1Q</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#bg2q">2020-2Q</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#bg3q">2020-3Q</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#bg4q">2020-4Q</a>
+            </li>
+            <!--  <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                 Section 4
+               </a>
+               <div class="dropdown-menu">
+                 <a class="dropdown-item" href="#section41">Link 1</a>
+                 <a class="dropdown-item" href="#section42">Link 2</a>
+               </div>
+               </li>-->
+         </ul>
+      </nav>
+      <p class="text-right">注）評点0は計算から除外</p>
+      <table class="table table-striped table-hover">
+         <thead>
+            <tr>
+               <th>年度</th>
+               <th>QTR</th>
+               <th>ST</th>
+               <th>SA</th>
+               <th>PM</th>
+               <th>TS</th>
+               <th>科目名</th>
+               <th>指導教員</th>
+               <th>受講者数</th>
+               <th>評点5</th>
+               <th>評点4</th>
+               <th>評点3</th>
+               <th>評点2</th>
+               <th>評点1</th>
+               <th>評点0</th>
+               <th>4以上</th>
+               <th>単位取得</th>
+            </tr>
+         </thead>
+         <tbody id="Infotable">
+            <% @results.each do |result| %>
+            <% year = result[0].to_i % 2 == 0 ? 'bgyreven' : 'bgyrodd' %>
+            <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
+            <tr id="<%= qtr %>">
+               <td class="center <%= year %>"><%= result[0] %></td>
+               <td class="center <%= qtr %>"><%= result[1] %></td>
+               <td class="center"><%= result[2] %></td>
+               <td class="center"><%= result[3] %></td>
+               <td class="center"><%= result[4] %></td>
+               <td class="center"><%= result[5] %></td>
+               <td><%= result[6] %></td>
+               <td><%= result[7] %></td>
+               <td class="center"><%= result[8] %></td>
+               <td class="center"><%= result[9] %></td>
+               <td class="center"><%= result[10] %></td>
+               <td class="center"><%= result[11] %></td>
+               <td class="center"><%= result[12] %></td>
+               <td class="center"><%= result[13] %></td>
+               <td class="center"><%= result[14] %></td>
+               <td class="center"><%= result[15] %></td>
+               <td class="center"><%= result[16] %></td>
+            </tr>
+            <% end %>
+         </tbody>
+      </table>
+   </div>
+</div>
+<script>
+   $(document).ready(function(){
+     $("#SearchInput").on("keyup", function() {
+       var value = $(this).val().toLowerCase();
+       $("#Infotable tr").filter(function() {
+         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+       });
+     });
+   });
+</script>
