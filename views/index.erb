@@ -6,6 +6,7 @@
 <input type="submit" value="絞り込み">
 <input type="text" size="30" maxlength="30" name="search" value=<%= @search %>>
 <input type="button" value="×" onclick="document.refine.search.value = ''">
+<input type="text" size="30" maxlength="30" id="SearchInput" placeholder="QuickSearch...">
 </form>
 <span class="caption">注）評点0は計算から除外　　</span>
 
@@ -35,7 +36,7 @@
     </tr>
     </thead>
     
-    <tbody>
+    <tbody id="Infotable">
     <% @results.each do |result| %>
     <% year = result[0].to_i % 2 == 0 ? 'bgeven' : 'bgodd' %>
     <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
@@ -62,5 +63,15 @@
     </tbody>
     
   </table>
-
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#SearchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#Infotable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+   });
+</script>
