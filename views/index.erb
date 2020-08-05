@@ -62,17 +62,38 @@
 
 <script>
    $(document).ready(function(){
+    
+    let filterTag = [];
+    let unFilterTag = [];
 
     $("#SearchInput").on("keyup", function () {
            var value = $(this).val().toLowerCase();
            $("table tbody tr").filter(function () {
                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
            });
+           if (filterTag.length > 1) {
+               $('input:checkbox[name="sspt[]"]').change(); 
+           }else{
+               $("table tbody tr:visible").each(function(index,item) {
+                   unFilterTag.forEach(function(val,index,arr) {
+                       item.children[val].setAttribute('style','color:#000000');
+                   })
+               });  
+           }
        });
 
        $('input:checkbox[name="sspt[]"]').on("change", function () {
-            let filterTag = [];
-            let unFilterTag = [];
+            filterTag = [];
+            unFilterTag = [];
+
+            let searchValue =  $("#SearchInput").val().toLowerCase();
+            
+            let domTrArray;
+               if ($.trim(searchValue) !="") {
+                 domTrArray =  $("table tbody tr:visible")
+               } else {
+                 domTrArray =  $("table tbody tr") 
+               }
 
             $("input[type='checkbox']").each(function (index, item) {
                  if (!$(this).prop("checked")) {
@@ -83,17 +104,23 @@
             });
 
             if ( filterTag.length < 1){
-               $("table tbody tr").show().each(function(index,item){
-                   unFilterTag.forEach(function(val,index,arr){
-                       item.children[val].setAttribute('style','color:#000000');
-                   })
-               });               
+              if ($.trim(searchValue) !="") {
+                  $("#SearchInput").keyup() 
+               }else{  
+                  $("table tbody tr").show().each(function(index,item){
+                     unFilterTag.forEach(function(val,index,arr){
+                        item.children[val].setAttribute('style','color:#000000');
+                     })
+                  });     
+               }
             } else {
-                $("table tbody tr").hide().each(function (index,item) {
+                domTrArray.hide().each(function (index,item) {
                      filterTag.forEach(function(val,index,arr){
                         if (item.children[val].textContent.indexOf("◎") > -1) {
                               item.removeAttribute("style");
                               item.children[val].setAttribute('style','color:#ff9966');
+                           } else {
+                             
                            }
                      });
                      unFilterTag.forEach(function(val,index,arr){
