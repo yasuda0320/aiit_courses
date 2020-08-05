@@ -1,77 +1,112 @@
-<form class="margin" name="refine" action="/refine" method="post">
-<input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
-<input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
-<input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
-<input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
-<input type="submit" value="絞り込み">
-<input type="text" size="30" maxlength="30" name="search" value=<%= @search %>>
-<input type="button" value="×" onclick="document.refine.search.value = ''">
-<input type="text" size="30" maxlength="30" id="SearchInput" placeholder="QuickSearch...">
-</form>
+<div class="margin">
+   <input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
+   <input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
+   <input type="checkbox" name="sspt[]" value="PM" <%= @checks[2] ? 'checked' : '' %>>PM
+   <input type="checkbox" name="sspt[]" value="TS" <%= @checks[3] ? 'checked' : '' %>>TS
+   <input type="text" size="30" maxlength="30" name="search" id="SearchInput" placeholder="QuickSearch...">
+   <input type="button" value="clear" id="Clear">
+</div>
 <span class="caption">注）評点0は計算から除外　　</span>
-
 <div class="sticky_table_wrapper" height="100%">
-
-  <table class="sticky_table">
-  
-    <thead>
-    <tr>
-      <th>年度</th>
-      <th>QTR</th>
-      <th>ST</th>
-      <th>SA</th>
-      <th>PM</th>
-      <th>TS</th>
-      <th>科目名</th>
-      <th>指導教員</th>
-      <th>受講者数</th>
-      <th>評点5</th>
-      <th>評点4</th>
-      <th>評点3</th>
-      <th>評点2</th>
-      <th>評点1</th>
-      <th>評点0</th>
-      <th>4以上</th>
-      <th>単位取得</th>
-    </tr>
-    </thead>
-    
-    <tbody id="Infotable">
-    <% @results.each do |result| %>
-    <% year = result[0].to_i % 2 == 0 ? 'bgeven' : 'bgodd' %>
-    <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
-    <tr>
-      <td class="center <%= year %>"><%= result[0] %></td>
-      <td class="center <%= qtr %>"><%= result[1] %></td>
-      <td class="center <%= @checks[0] ? 'checked' : '' %>"><%= result[2] %></td>
-      <td class="center <%= @checks[1] ? 'checked' : '' %>"><%= result[3] %></td>
-      <td class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
-      <td class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
-      <td><%= result[6] %></td>
-      <td><%= result[7] %></td>
-      <td class="center"><%= result[8] %></td>
-      <td class="center"><%= result[9] %></td>
-      <td class="center"><%= result[10] %></td>
-      <td class="center"><%= result[11] %></td>
-      <td class="center"><%= result[12] %></td>
-      <td class="center"><%= result[13] %></td>
-      <td class="center"><%= result[14] %></td>
-      <td class="center"><%= result[15] %></td>
-      <td class="center"><%= result[16] %></td>
-    </tr>
-    <% end %>
-    </tbody>
-    
-  </table>
+   <table class="sticky_table">
+      <thead>
+         <tr>
+            <th>年度</th>
+            <th>QTR</th>
+            <th>ST</th>
+            <th>SA</th>
+            <th>PM</th>
+            <th>TS</th>
+            <th>科目名</th>
+            <th>指導教員</th>
+            <th>受講者数</th>
+            <th>評点5</th>
+            <th>評点4</th>
+            <th>評点3</th>
+            <th>評点2</th>
+            <th>評点1</th>
+            <th>評点0</th>
+            <th>4以上</th>
+            <th>単位取得</th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @results.each do |result| %>
+         <% year = result[0].to_i % 2 == 0 ? 'bgeven' : 'bgodd' %>
+         <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
+         <tr>
+            <td class="center <%= year %>"><%= result[0] %></td>
+            <td class="center <%= qtr %>"><%= result[1] %></td>
+            <td name="ST" class="center <%= @checks[0] ? 'checked' : '' %>"><%= result[2] %></td>
+            <td name="SA" class="center <%= @checks[1] ? 'checked' : '' %>"><%= result[3] %></td>
+            <td name="PM" class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
+            <td name="TS" class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
+            <td><%= result[6] %></td>
+            <td><%= result[7] %></td>
+            <td class="center"><%= result[8] %></td>
+            <td class="center"><%= result[9] %></td>
+            <td class="center"><%= result[10] %></td>
+            <td class="center"><%= result[11] %></td>
+            <td class="center"><%= result[12] %></td>
+            <td class="center"><%= result[13] %></td>
+            <td class="center"><%= result[14] %></td>
+            <td class="center"><%= result[15] %></td>
+            <td class="center"><%= result[16] %></td>
+         </tr>
+         <% end %>
+      </tbody>
+   </table>
 </div>
 
 <script>
-    $(document).ready(function(){
-        $("#SearchInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#Infotable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+   $(document).ready(function(){
+
+    $("#SearchInput").on("keyup", function () {
+           var value = $(this).val().toLowerCase();
+           $("table tbody tr").filter(function () {
+               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+           });
+       });
+
+       $('input:checkbox[name="sspt[]"]').on("change", function () {
+            let filterTag = [];
+            let unFilterTag = [];
+
+            $("input[type='checkbox']").each(function (index, item) {
+                 if (!$(this).prop("checked")) {
+                     unFilterTag.push($(this).val());
+                 } else {
+                     filterTag.push($(this).val()); 
+                 }
             });
-        });
+
+            if ( filterTag.length < 1){
+               $("table tbody tr").show().each(function(index,item){
+                   unFilterTag.forEach(function(val,index,arr){
+                       item.children[val].setAttribute('style','color:#000000');
+                   })
+               });               
+            } else {
+                $("table tbody tr").hide().each(function (index,item) {
+                     filterTag.forEach(function(val,index,arr){
+                        if (item.children[val].textContent.indexOf("◎") > -1) {
+                              item.removeAttribute("style");
+                              item.children[val].setAttribute('style','color:#ff9966');
+                           }
+                     });
+                     unFilterTag.forEach(function(val,index,arr){
+                         item.children[val].setAttribute('style','color:#000000');
+                     })
+                })
+            }
+       });
+
+        $("#Clear").on("click", function () {
+            $("#SearchInput").val('');
+            $('input:checkbox[name="sspt[]"]').each(function(){
+                $(this).prop("checked",false);
+            });
+            $('input:checkbox[name="sspt[]"]').change();
+       });
    });
 </script>
