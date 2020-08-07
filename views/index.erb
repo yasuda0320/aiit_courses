@@ -1,3 +1,13 @@
+<div class="banner">
+<img src="/img/banner.png" alt="タイトルバナー" title="HONU_banner" class="honu">
+
+<style>
+   [class="honu"] {
+     width: 100%;
+}
+</style>
+</div>
+
 <div class="margin">
     <input type="checkbox" name="sspt[]" value="ST" <%= @checks[0] ? 'checked' : '' %>>ST
     <input type="checkbox" name="sspt[]" value="SA" <%= @checks[1] ? 'checked' : '' %>>SA
@@ -84,7 +94,7 @@
 
          let searchValue = $("#SearchInput").val().toLowerCase();
          let domTrArray;
-         
+
          if ($.trim(searchValue) != "") {
                 $("#SearchInput").keyup();
                domTrArray = $("table tbody tr:visible");
