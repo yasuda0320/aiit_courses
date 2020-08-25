@@ -48,7 +48,13 @@
                 <td name="PM" class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
                 <td name="TS" class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
                 <td><%= result[6] %></td>
-                <td><%= result[7] %></td>
+                <% teacher = result[7] %>
+                <% @faculty.each do |name, url|%>
+                  <% if teacher.include?(name) %>
+                    <% teacher.sub!(name, %!<a href="#{@base_url + url}" target="_blank">#{name}</a>!) %>
+                  <% end %>
+                <% end %>
+                <td><%= teacher %></td>
                 <td class="center"><%= result[8] %></td>
                 <td class="center"><%= result[9] %></td>
                 <td class="center"><%= result[10] %></td>

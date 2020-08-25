@@ -1,18 +1,21 @@
 require 'bundler/setup'
 Bundler.require
 require_relative 'constants'
+require_relative 'results'
+require_relative 'faculty'
 
 require 'sinatra'
 if development?
   # 開発中は再起動しないでよいように自動リロード
   require 'sinatra/reloader'
 end
-require_relative 'results'
 
 ########################################
 # トップページの処理
 ########################################
 get '/' do
+  @base_url = BASE_URL
+  @faculty = FACULTY
   @search = ''
   @checks = [false, false, false, false]
   @results = RESULTS
@@ -23,6 +26,8 @@ end
 # 絞り込みボタンを押された時の処理
 ########################################
 post '/refine' do
+  @base_url = BASE_URL
+  @faculty = FACULTY
   @search = params[:search] || ''
   @results = RESULTS.select do |result|
     @search.empty? || result[COURSE] =~ /#{@search}/ || result[TEACHER] =~ /#{@search}/
