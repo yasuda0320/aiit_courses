@@ -84,3 +84,24 @@ td.checked {color: #ff9966}
 .hard {
   background-color: pink;
 }
+
+a {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(49, 170, 226) 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #ff4081;
+}
+
+a:hover {
+  background-position: -100% 0;
+  color: #fff;
+}
+
+a:active {
+  color: #26a69a;
+}
