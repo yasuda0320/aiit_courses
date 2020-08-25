@@ -38,6 +38,8 @@
             <% @results.each do |result| %>
             <% year = result[0].to_i % 2 == 0 ? 'bgeven' : 'bgodd' %>
             <% qtr = result[1] == '1Q' ? 'bg1q' : (result[1] == '2Q' ? 'bg2q' : (result[1] == '3Q' ? 'bg3q' : 'bg4q')) %>
+            <% difficulty1 = result[15].empty? ? '' : (result[15].to_i >= 80 ? 'easy' : '') %>
+            <% difficulty2 = result[16].empty? ? '' : (result[16].to_i < 80 ? 'hard' : '') %>
             <tr>
                 <td class="center <%= year %>"><%= result[0] %></td>
                 <td class="center <%= qtr %>"><%= result[1] %></td>
@@ -54,8 +56,8 @@
                 <td class="center"><%= result[12] %></td>
                 <td class="center"><%= result[13] %></td>
                 <td class="center"><%= result[14] %></td>
-                <td class="center"><%= result[15] %></td>
-                <td class="center"><%= result[16] %></td>
+                <td class="center <%= difficulty1 %>"><%= result[15] %></td>
+                <td class="center <%= difficulty2 %>"><%= result[16] %></td>
             </tr>
             <% end %>
         </tbody>
