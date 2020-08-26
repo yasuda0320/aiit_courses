@@ -3,6 +3,7 @@ Bundler.require
 require_relative 'constants'
 require_relative 'results'
 require_relative 'faculty'
+require_relative 'video'
 
 require 'sinatra'
 if development?
@@ -16,6 +17,8 @@ end
 get '/' do
   @base_url = BASE_URL
   @faculty = FACULTY
+  @video = VIDEO
+  @base_url_video = BASE_URL_VIDEO
   @search = ''
   @checks = [false, false, false, false]
   @results = RESULTS

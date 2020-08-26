@@ -47,13 +47,22 @@
                 <td name="SA" class="center <%= @checks[1] ? 'checked' : '' %>"><%= result[3] %></td>
                 <td name="PM" class="center <%= @checks[2] ? 'checked' : '' %>"><%= result[4] %></td>
                 <td name="TS" class="center <%= @checks[3] ? 'checked' : '' %>"><%= result[5] %></td>
-                <td><%= result[6] %></td>
+
+                <% course = result[6] %>
+                <% @video.each do |name, number|%>
+                  <% if course.include?(name) %>
+                    <% course.sub!(name, %!<a href="#{@base_url_video + number}" target="_blank">#{name}</a>!) %>
+                  <% end %>
+                <% end %>
+
                 <% teacher = result[7] %>
                 <% @faculty.each do |name, url|%>
                   <% if teacher.include?(name) %>
                     <% teacher.sub!(name, %!<a href="#{@base_url + url}" target="_blank">#{name}</a>!) %>
                   <% end %>
                 <% end %>
+
+                <td><%= course %></td>
                 <td><%= teacher %></td>
                 <td class="center"><%= result[8] %></td>
                 <td class="center"><%= result[9] %></td>
