@@ -91,10 +91,12 @@ a {
   background-size: 200% auto;
   transition: .3s;
   text-decoration: none;
+  color: inherit;
+  font-style: italic;
 }
 
 a:visited {
-  color: #ff4081;
+  color: inherit;
 }
 
 a:hover {
@@ -103,5 +105,5 @@ a:hover {
 }
 
 a:active {
-  color: #26a69a;
+  color: inherit;
 }
